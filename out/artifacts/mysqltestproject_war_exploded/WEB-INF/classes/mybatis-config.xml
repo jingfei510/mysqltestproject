@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- configuration代码mybatis项目的配置信息 -->
+<configuration>
+
+	<settings>
+		<!-- 这是在全局配置文件中设置Null值处理 -->
+		<setting name="jdbcTypeForNull" value="NULL" />
+		<!-- true:表示支持延迟加载 false表示不支持延迟加载 -->
+		<setting name="lazyLoadingEnabled" value="true" />
+		<!-- true:表示积极的去加载关联的信息 false:表示消极的加载关联的信息(相当于懒加载) -->
+		<setting name="aggressiveLazyLoading" value="false" />
+		<!-- 开启二级缓存 -->
+		<setting name="cacheEnabled" value="true" />
+		<!-- 开启类属性名称支持驼峰命名 -->
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<!-- 配置mybatis日志采用的是log4j -->
+		<setting name="logImpl" value="STDOUT_LOGGING" />
+	</settings>
+</configuration>

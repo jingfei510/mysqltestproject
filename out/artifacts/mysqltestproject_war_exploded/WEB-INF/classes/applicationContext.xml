@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd ">
+
+	<!-- 配置读取jdbc.properties文件标签 -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+
+	<!-- ssm整合其实主要是spring和mybatis进行整合，整合：1.数据源 2.事务管理器 3.事务 4.sqlSessionFactory 
+		5.mapper -->
+	<!-- 配置数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass">
+			<value>${jdbc.driver}</value>
+		</property>
+
+		<property name="jdbcUrl">
+			<value>${jdbc.url}</value>
+		</property>
+
+		<property name="user">
+			<value>${jdbc.username}</value>
+		</property>
+
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+	</bean>
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 配置事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- 配置sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- configLocation属性用来给SqlSessionFactoryBean读取mytis的配置文件使用的属性 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+
+	<!-- 配置mapper ，让spring创建mapper的对象 -->
+
+	<bean id="mapperScannerConfig" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.xx.mapper"></property>
+	</bean>
+
+	<!-- 配置注解扫描目录 -->
+	<context:component-scan base-package="com.xx"></context:component-scan>
+
+</beans>
